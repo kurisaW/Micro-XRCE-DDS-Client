@@ -1,7 +1,10 @@
 #include <uxr/client/profile/transport/serial/serial_transport_rtthread.h>
 #include <uxr/client/profile/transport/serial/serial_transport_platform.h>
+
+#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <rtthread.h>
 #include <sys/types.h>
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 // Place here your includes
 

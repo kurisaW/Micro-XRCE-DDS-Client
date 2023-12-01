@@ -6,8 +6,9 @@ extern "C"
 {
 #endif
 
-// Place here your includes
+#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <rtthread.h>
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 typedef struct uxrSerialPlatform
 {

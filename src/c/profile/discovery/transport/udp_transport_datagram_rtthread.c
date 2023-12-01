@@ -7,7 +7,7 @@
 #include <rtthread.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#endif
+#endif  // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 bool uxr_init_udp_transport_datagram(
         uxrUDPTransportDatagram* transport)

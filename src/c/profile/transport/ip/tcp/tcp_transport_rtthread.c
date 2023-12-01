@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
@@ -10,6 +12,7 @@
 #include <netdb.h>
 #include <sys/time.h>
 #include <sys/select.h>
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 #ifdef UCLIENT_PLATFORM_LINUX
 static void sigpipe_handler(int fd)
