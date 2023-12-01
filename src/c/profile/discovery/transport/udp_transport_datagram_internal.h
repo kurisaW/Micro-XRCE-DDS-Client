@@ -57,7 +57,7 @@ typedef struct uxrUDPTransportDatagram
 #elif defined(UCLIENT_PLATFORM_POSIX_NOPOLL)
     int fd;
 #elif defined(UCLIENT_PLATFORM_RTTHREAD)
-    int fd;
+    struct pollfd poll_fd;
 #elif defined(UCLIENT_PLATFORM_WINDOWS)
     WSAPOLLFD poll_fd;
 #elif defined(UCLIENT_PLATFORM_FREERTOS_PLUS_TCP)
