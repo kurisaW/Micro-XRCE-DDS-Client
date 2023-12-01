@@ -12,7 +12,6 @@
 #include <netdb.h>
 #include <sys/time.h>
 #include <sys/select.h>
-#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 bool uxr_init_udp_platform(
         uxrUDPPlatform* platform,
@@ -131,3 +130,5 @@ size_t uxr_read_udp_data_platform(
 
     return rv;
 }
+
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
