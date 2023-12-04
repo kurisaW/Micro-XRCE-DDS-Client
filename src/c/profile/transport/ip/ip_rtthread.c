@@ -1,10 +1,8 @@
 #include <uxr/client/profile/transport/ip/ip.h>
 #include <uxr/client/config.h>
 
-#if defined(UCLIENT_PLATFORM_RTTHREAD)
 #include <arpa/inet.h>
 #include <sys/socket.h>
-#endif /* if defined(UCLIENT_PLATFORM_RTTHREAD) */
 
 bool uxr_ip_to_locator(
         char const* ip,

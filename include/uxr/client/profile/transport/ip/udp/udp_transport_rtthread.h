@@ -6,12 +6,10 @@ extern "C"
 {
 #endif
 
-#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "netdb.h"
 #include <rtthread.h>
-#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 typedef struct uxrUDPPlatform
 {

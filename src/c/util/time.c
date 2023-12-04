@@ -7,6 +7,8 @@
 #elif defined(UCLIENT_PLATFORM_FREERTOS_PLUS_TCP)
 #include "FreeRTOS.h"
 #include "task.h"
+#elif defined(UCLIENT_PLATFORM_RTTHREAD)
+#include <rtthread.h>
 #endif /* ifdef WIN32 */
 
 //==================================================================
@@ -55,6 +57,9 @@ int64_t uxr_nanos(
     struct timespec ts;
     z_impl_clock_gettime(CLOCK_REALTIME, &ts);
     return (((int64_t)ts.tv_sec) * 1000000000) + ts.tv_nsec;
+#elif defined(UCLIENT_PLATFORM_RTTHREAD)
+    uint64_t now_ms = (uint64_t)rt_tick_get_millisecond();
+    return now_ms * 1000000;
 #else
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);

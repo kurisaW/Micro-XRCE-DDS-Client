@@ -6,9 +6,7 @@ extern "C"
 {
 #endif
 
-#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <rtthread.h>
-#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
 
 typedef struct uxrSerialPlatform
 {

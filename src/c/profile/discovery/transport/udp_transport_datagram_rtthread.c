@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// #ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 
 bool uxr_init_udp_transport_datagram(
         uxrUDPTransportDatagram* transport)
@@ -146,5 +145,3 @@ void uxr_bytes_to_ip(
     char* internal_ip = inet_ntoa(addr);
     strcpy(ip, internal_ip);
 }
-
-// #endif  // RTT_UCLIENT_PLATFORM_RTTHREAD
