@@ -1,7 +1,6 @@
 #include <uxr/client/profile/transport/serial/serial_transport_rtthread.h>
 #include <uxr/client/profile/transport/serial/serial_transport_platform.h>
 
-#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <rtthread.h>
 #include <sys/types.h>
 
@@ -56,5 +55,3 @@ size_t uxr_read_serial_data_platform(uxrSerialPlatform* platform, uint8_t* buf, 
     // Return number of bytes read (max bytes: len)
     return bytes_read;
 }
-
-#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
