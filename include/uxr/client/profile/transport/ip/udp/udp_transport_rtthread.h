@@ -16,6 +16,7 @@ extern "C"
 typedef struct uxrUDPPlatform
 {
     int sock;
+    struct sockaddr_in server_addr;
 } uxrUDPPlatform;
 
 #ifdef __cplusplus

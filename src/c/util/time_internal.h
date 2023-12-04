@@ -23,11 +23,22 @@ extern "C"
 #include <uxr/client/visibility.h>
 #include <stdint.h>
 
+#ifdef UCLIENT_PLATFORM_RTTHREAD
+#include <time.h>
+#include <stdio.h>
+#include <rtthread.h>
+#endif
+
 static inline int64_t uxr_convert_to_nanos(
         int32_t sec,
         uint32_t nsec)
 {
+#ifdef UCLIENT_PLATFORM_RTTHREAD
+    uint64_t now_ms = (uint64_t)rt_tick_get_millisecond();
+    return now_ms * 1000000;
+#else
     return ((int64_t)sec * 1000000000) + nsec;
+#endif
 }
 
 #ifdef __cplusplus

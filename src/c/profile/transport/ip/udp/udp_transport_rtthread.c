@@ -21,7 +21,6 @@ bool uxr_init_udp_platform(
 {
     bool rv = false;
     struct hostent *host = RT_NULL;
-    struct sockaddr_in server_addr;
 
     if (ip_protocol != UXR_IPv4) {
         printf("Unsupported ip protocol\n");
@@ -40,12 +39,12 @@ bool uxr_init_udp_platform(
         goto __exit;
     }
 
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(atoi(port));
-    server_addr.sin_addr = *((struct in_addr *)host->h_addr);
-    rt_memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
+    platform->server_addr.sin_family = AF_INET;
+    platform->server_addr.sin_port = htons(atoi(port));
+    platform->server_addr.sin_addr = *((struct in_addr *)host->h_addr);
+    rt_memset(&(platform->server_addr.sin_zero), 0, sizeof(platform->server_addr.sin_zero));
 
-    if (connect(platform->sock, (struct sockaddr *)&server_addr, sizeof(struct sockaddr)) == -1)
+    if (connect(platform->sock, (struct sockaddr *)&platform->server_addr, sizeof(struct sockaddr)) == -1)
     {
         printf("Connect fail!\n");
         if (platform->sock >= 0)
