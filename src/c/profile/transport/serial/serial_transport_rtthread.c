@@ -1,7 +1,7 @@
 #include <uxr/client/profile/transport/serial/serial_transport_rtthread.h>
 #include <uxr/client/profile/transport/serial/serial_transport_platform.h>
 
-#include <rtthread.h>
+#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <sys/types.h>
 
 // Place here your includes
@@ -55,3 +55,5 @@ size_t uxr_read_serial_data_platform(uxrSerialPlatform* platform, uint8_t* buf, 
     // Return number of bytes read (max bytes: len)
     return bytes_read;
 }
+
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD

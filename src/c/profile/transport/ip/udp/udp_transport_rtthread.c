@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include <netdb.h>
 #include <sys/time.h>
 #include <sys/select.h>
 
@@ -128,3 +128,5 @@ size_t uxr_read_udp_data_platform(
 
     return rv;
 }
+
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD

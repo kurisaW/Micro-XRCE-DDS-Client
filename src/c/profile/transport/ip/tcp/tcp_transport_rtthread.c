@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
 
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include <netdb.h>
 #include <sys/time.h>
 #include <sys/select.h>
 
@@ -148,3 +148,5 @@ void uxr_disconnect_tcp_platform(
     }
     return;
 }
+
+#endif // RTT_UCLIENT_PLATFORM_RTTHREAD
