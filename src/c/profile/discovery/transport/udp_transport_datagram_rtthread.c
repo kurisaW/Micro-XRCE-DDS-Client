@@ -14,50 +14,13 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef RTT_UCLIENT_PLATFORM_RTTHREAD
-
 bool uxr_init_udp_transport_datagram(
         uxrUDPTransportDatagram* transport)
 {
-    bool rv = false;
-    struct hostent *host = RT_NULL;
-
-    if (ip_protocol != UXR_IPv4) {
-        printf("Unsupported ip protocol\n");
-        goto __exit;
-    }
-
-    host = (struct hostent *)gethostbyname(ip);
-    if (host == RT_NULL)
-    {
-        printf("Get host by name failed!");
-        goto __exit;
-    }
-
-    if((transport->sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
-        printf("Create socket error\n");
-        goto __exit;
-    }
-
-    transport->server_addr.sin_family = AF_INET;
-    transport->server_addr.sin_port = htons(atoi(port));
-    transport->server_addr.sin_addr = *((struct in_addr *)host->h_addr);
-    rt_memset(&(server_addr.sin_zero), 0, sizeof(transport->server_addr.sin_zero));
-
-    if (connect(transport->fd, (struct sockaddr *)&(transport->server_addr), sizeof(struct sockaddr)) == -1)
-    {
-        printf("Connect fail!\n");
-        if (transport->sock >= 0)
-        {
-            closesocket(transport->sock);
-            transport->sock = -1;
-        }
-        goto __exit;
-    }
-
-    rv = true;
-__exit:
-    return rv;
+    int fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    transport->fd = fd;
+    
+    return fd != -1;
 }
 
 bool uxr_close_udp_transport_datagram(
@@ -147,4 +110,3 @@ void uxr_bytes_to_ip(
     strcpy(ip, internal_ip);
 }
 
-#endif  // RTT_UCLIENT_PLATFORM_RTTHREAD
