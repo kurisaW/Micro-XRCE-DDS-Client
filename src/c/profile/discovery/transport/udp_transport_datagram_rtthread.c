@@ -46,8 +46,7 @@ bool uxr_udp_send_datagram_to(
         case ADDRESS_FORMAT_MEDIUM:
         {
             transport->server_addr.sin_family = AF_INET;
-            transport->server_addr.sin_port = htons(atoi(port));
-            transport->server_addr.sin_addr = *((struct in_addr *)host->h_addr);
+            transport->server_addr.sin_port = htons(locator->_.medium_locator.locator_port);
             rt_memset(&(transport->server_addr.sin_zero), 0, sizeof(transport->server_addr.sin_zero));
 
             memcpy(&transport->server_addr.sin_addr, locator->_.medium_locator.address, sizeof(transport->server_addr.sin_addr));
