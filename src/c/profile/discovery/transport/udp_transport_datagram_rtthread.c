@@ -26,10 +26,10 @@ bool uxr_init_udp_transport_datagram(
 bool uxr_close_udp_transport_datagram(
         uxrUDPTransportDatagram* transport)
 {
-    if (transport->sock >= 0)
+    if (transport->fd >= 0)
     {
-        closesocket(transport->sock);
-        transport->sock = -1;
+        closesocket(transport->fd);
+        transport->fd = -1;
     }
     return true;
 }
