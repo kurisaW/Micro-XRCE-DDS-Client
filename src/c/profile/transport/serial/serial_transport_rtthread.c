@@ -10,6 +10,9 @@
 static int sem_initialized = 0;
 static struct rt_semaphore uxr_uart_rx_sem;
 
+// Extenrally defined with RT-Thread
+#define MICRO_ROS_SERIAL_NAME
+
 static rt_err_t uart_callback(rt_device_t dev, rt_size_t size)
 {
     // Place here your writing bytes platform code
@@ -21,19 +24,19 @@ static rt_err_t uart_callback(rt_device_t dev, rt_size_t size)
 bool uxr_init_serial_platform(struct uxrSerialPlatform* platform, int fd, uint8_t remote_addr, uint8_t local_addr)
 {
     // Place here your writing bytes platform code
-    (rt_device_t)fd = rt_device_find(platform->dev);
-    if(!fd)
+    platform->dev = rt_device_find(MICRO_ROS_SERIAL_NAME);
+    if(!platform->dev)
     {
-        LOG_E("Failed to open device %s", fd);
+        LOG_E("Failed to open device %s", platform->dev);
         return false;
     }
     if(sem_initialized == 0)
     {
-        rt_sem_init(&fd, "uxr_uart_rx_sem", 0, RT_IPC_FLAG_FIFO);
+        rt_sem_init(&platform->dev, "uxr_uart_rx_sem", 0, RT_IPC_FLAG_FIFO);
         sem_initialized = 1;
     }
-    rt_device_open(fd, RT_DEVICE_FLAG_INT_RX);
-    rt_device_set_rx_indicate(fd, uart_callback);
+    rt_device_open(platform->dev, RT_DEVICE_FLAG_INT_RX);
+    rt_device_set_rx_indicate(platform->dev, uart_callback);
 
     // Return true if success
     return true;
