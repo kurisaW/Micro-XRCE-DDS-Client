@@ -10,9 +10,6 @@
 static int sem_initialized = 0;
 static struct rt_semaphore uxr_uart_rx_sem;
 
-// Extenrally defined with RT-Thread
-#define MICRO_ROS_SERIAL_NAME
-
 static rt_err_t uart_callback(rt_device_t dev, rt_size_t size)
 {
     // Place here your writing bytes platform code
@@ -21,9 +18,18 @@ static rt_err_t uart_callback(rt_device_t dev, rt_size_t size)
     return RT_EOK;
 }
 
-bool uxr_init_serial_platform(struct uxrSerialPlatform* platform, int fd, uint8_t remote_addr, uint8_t local_addr)
+bool uxr_init_serial_platform(
+        void* args,
+        const int fd,
+        uint8_t remote_addr,
+        uint8_t local_addr)
 {
     // Place here your writing bytes platform code
+    (void) remote_addr;
+    (void) local_addr;
+
+    struct uxrSerialPlatform* platform = (struct uxrSerialPlatform*) args;
+
     platform->dev = rt_device_find(MICRO_ROS_SERIAL_NAME);
     if(!platform->dev)
     {
@@ -32,7 +38,7 @@ bool uxr_init_serial_platform(struct uxrSerialPlatform* platform, int fd, uint8_
     }
     if(sem_initialized == 0)
     {
-        rt_sem_init(&platform->dev, "uxr_uart_rx_sem", 0, RT_IPC_FLAG_FIFO);
+        rt_sem_init(&uxr_uart_rx_sem, "uxr_uart_rx_sem", 0, RT_IPC_FLAG_FIFO);
         sem_initialized = 1;
     }
     rt_device_open(platform->dev, RT_DEVICE_FLAG_INT_RX);
@@ -42,9 +48,12 @@ bool uxr_init_serial_platform(struct uxrSerialPlatform* platform, int fd, uint8_
     return true;
 }
 
-bool uxr_close_serial_platform(struct uxrSerialPlatform* platform)
+bool uxr_close_serial_platform(
+        void* args)
 {
     // Place here your writing bytes platform code
+    struct uxrSerialPlatform* platform = (struct uxrSerialPlatform*) args;
+
     if (!(platform->dev)) {
         LOG_E("Failed to close device %s",platform->dev);
         return false;
@@ -57,18 +66,31 @@ bool uxr_close_serial_platform(struct uxrSerialPlatform* platform)
     return true;
 }
 
-size_t uxr_write_serial_data_platform(uxrSerialPlatform* platform, uint8_t* buf, size_t len, uint8_t* errcode)
+size_t uxr_write_serial_data_platform(
+        void* args,
+        const uint8_t* buf,
+        size_t len,
+        uint8_t* errcode)
 {
     // Place here your writing bytes platform code
+    struct uxrSerialPlatform* platform = (struct uxrSerialPlatform*) args;
+
     rt_ssize_t bytes_written = rt_device_write(platform->dev, 0, (void*)buf, (rt_size_t)len);
 
     // Return number of bytes written
     return bytes_written;
 }
 
-size_t uxr_read_serial_data_platform(uxrSerialPlatform* platform, uint8_t* buf, size_t len, int timeout, uint8_t* errcode)
+size_t uxr_read_serial_data_platform(
+        void* args,
+        uint8_t* buf,
+        size_t len,
+        int timeout,
+        uint8_t* errcode)
 {
     // Place here your reading bytes platform code
+    struct uxrSerialPlatform* platform = (struct uxrSerialPlatform*) args;
+
     int tick = rt_tick_get();
     for(int i = 0; i < len; i++)
     {
