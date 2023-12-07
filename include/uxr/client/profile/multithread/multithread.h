@@ -32,6 +32,9 @@ struct uxrSession;
 #elif defined(PLATFORM_NAME_FREERTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
+#elif defined(PLATFORM_NAME_RTTHREAD)
+#include <rtthread.h>
+#include <rthw.h>
 #elif defined(UCLIENT_PLATFORM_ZEPHYR)
 #elif defined(UCLIENT_PLATFORM_POSIX)
 #include <pthread.h>
@@ -45,6 +48,8 @@ typedef struct uxrMutex
 #elif defined(PLATFORM_NAME_FREERTOS)
     SemaphoreHandle_t impl;
     StaticSemaphore_t xMutexBuffer;
+#elif defined(PLATFORM_NAME_RTTHREAD)
+    rt_mutex_t impl;
 #elif defined(UCLIENT_PLATFORM_ZEPHYR)
     struct k_mutex impl;
 #elif defined(UCLIENT_PLATFORM_POSIX)

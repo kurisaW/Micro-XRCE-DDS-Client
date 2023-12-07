@@ -34,6 +34,11 @@ extern "C"
 #include <poll.h>
 #elif defined(UCLIENT_PLATFORM_WINDOWS)
 #include <winsock2.h>
+#elif defined(UCLIENT_PLATFORM_RTTHREAD)
+#include <rtthread.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <time.h>
 #elif defined(UCLIENT_PLATFORM_FREERTOS_PLUS_TCP)
 #include "FreeRTOS.h"
 #include "list.h"
@@ -55,6 +60,9 @@ typedef struct uxrUDPTransportDatagram
 #if defined(UCLIENT_PLATFORM_POSIX)
     struct pollfd poll_fd;
 #elif defined(UCLIENT_PLATFORM_POSIX_NOPOLL)
+    int fd;
+#elif defined(UCLIENT_PLATFORM_RTTHREAD)
+    struct sockaddr_in server_addr;
     int fd;
 #elif defined(UCLIENT_PLATFORM_WINDOWS)
     WSAPOLLFD poll_fd;
