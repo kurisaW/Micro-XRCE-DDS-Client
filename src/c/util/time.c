@@ -8,7 +8,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #elif defined(UCLIENT_PLATFORM_RTTHREAD)
-#include <rtthread.h>
+#include "rtthread.h"
 #endif /* ifdef WIN32 */
 
 //==================================================================
