@@ -7,6 +7,7 @@ extern "C"
 #endif
 
 #include <rtthread.h>
+#include <rtdevice.h>
 
 typedef struct uxrSerialPlatform
 {
